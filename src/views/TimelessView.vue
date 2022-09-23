@@ -37,27 +37,40 @@ export default defineComponent({
         },
       } as { [key: string]: any },
       modifierPrefix: 'explicit.pseudo_timeless_jewel_',
-      linkPrefix: 'https://www.pathofexile.com/trade/search/Kalandra?q=',
+      linkPrefix: 'https://www.pathofexile.com/trade/search/Kalandra/',
       jewelName: 'brutalRestraint',
       variantName: 'asenath',
       minMaxText: '500 - 8000',
       rollNumber: '',
       timelessLinkClass: '',
-      timelessLinkShow: true,
+      timelessLinkShow: false,
       timelessLink: '',
       timelessLinkText: 'Select your jewel configurations',
+      allRolls: false,
     };
   },
   methods: {
-    generateLink(): void {
+    async generateLink(): Promise<void> {
       console.log('generating...');
-      if (this.rollNumber) {
-        if (validateRoll(this.jewelDict, this.jewelName, this.rollNumber)) {
-          this.timelessLink = buildLink(
+      if (this.rollNumber || this.allRolls) {
+        const rollNumberArray =
+          this.rollNumber.indexOf(',') >= 0
+            ? [...new Set(this.rollNumber.split(','))]
+            : [this.rollNumber];
+        if (
+          validateRoll(
+            this.jewelDict,
+            this.jewelName,
+            this.allRolls,
+            rollNumberArray
+          )
+        ) {
+          this.timelessLink = await buildLink(
             this.jewelDict,
             this.jewelName,
             this.variantName,
-            this.rollNumber,
+            this.allRolls,
+            rollNumberArray,
             this.modifierPrefix,
             this.linkPrefix
           );
@@ -78,55 +91,53 @@ export default defineComponent({
       }
     },
   },
-  mounted() {
-    this;
-  },
 });
 
 function validateRoll(
   jewelDict: { [key: string]: any },
   jewelName: string,
-  rollNumber: string
+  allRolls: boolean,
+  rollNumberArray: string[]
 ): boolean {
-  console.log('validating...', rollNumber);
+  console.log('validating...', rollNumberArray);
+  if (allRolls) return true;
   const jewel = jewelDict[jewelName];
-  const validateNums =
-    rollNumber.indexOf(',') >= 0 ? rollNumber.split(',') : [rollNumber];
-  console.log(validateNums);
-  for (const num of validateNums) {
-    console.log(num);
+  for (const num of rollNumberArray) {
     if (!Number(num) || num < jewel.min || num > jewel.max) {
-      console.log(false);
       return false;
     }
   }
-  console.log(true);
   return true;
 }
 
-function buildLink(
+async function buildLink(
   jewelDict: { [key: string]: any },
   jewelName: string,
   variantName: string,
-  rollNumber: string,
+  allRolls: boolean,
+  rollNumberArray: string[],
   modifierPrefix: string,
   linkPrefix: string
-): string {
+): Promise<string> {
   let filters;
+  console.log(variantName);
   if (variantName === 'all') {
-    filters = jewelDict[jewelName].variants.map((variant: string) => ({
-      id: modifierPrefix + variant.toLowerCase(),
-      disabled: false,
-      value: { min: rollNumber, max: rollNumber },
-    }));
+    filters = jewelDict[jewelName].variants
+      .map((variant: string) =>
+        rollNumberArray.map((num: string) => ({
+          id: modifierPrefix + variant.toLowerCase(),
+          disabled: false,
+          value: allRolls ? null : { min: num, max: num },
+        }))
+      )
+      .flat();
+    console.log(filters);
   } else {
-    filters = [
-      {
-        id: modifierPrefix + variantName.toLowerCase(),
-        disabled: false,
-        value: { min: rollNumber, max: rollNumber },
-      },
-    ];
+    filters = rollNumberArray.map((num: string) => ({
+      id: modifierPrefix + variantName.toLowerCase(),
+      disabled: false,
+      value: allRolls ? null : { min: num, max: num },
+    }));
   }
 
   const stats = [
@@ -147,9 +158,17 @@ function buildLink(
     sort: { price: 'asc' },
   };
 
-  console.log(queryTemplate);
+  const res = await fetch('http://localhost:3000/tradeSearch', {
+    method: 'POST',
+    body: JSON.stringify(queryTemplate),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const jsonBody = await res.text();
+  console.log(jsonBody);
 
-  return linkPrefix + JSON.stringify(queryTemplate);
+  return linkPrefix + jsonBody;
 }
 </script>
 
@@ -158,7 +177,7 @@ function buildLink(
     <h1>Timeless Jewel Link</h1>
 
     <div class="inputs">
-      <form name="timelessJewel" @input="generateLink">
+      <form name="timelessJewel" @submit.prevent="generateLink">
         <select
           name="jewelName"
           id="jewelName"
@@ -185,11 +204,21 @@ function buildLink(
           >
             {{ variant }}
           </option>
+          <option key="all" value="all">All</option>
         </select>
 
         <span class="minMaxText">{{ minMaxText }}</span>
 
-        <input v-model="rollNumber" placeholder="Roll number" />
+        <div class="rollNumberForm">
+          <input
+            v-model="rollNumber"
+            :placeholder="allRolls ? 'Searching for all rolls' : 'Roll number'"
+            v-bind:disabled="allRolls"
+          />
+          <input type="checkbox" name="allRolls" v-model="allRolls" />
+          <label for="allRolls">All Rolls</label>
+        </div>
+        <button type="submit">Generate Link</button>
       </form>
       <span id="tradeLink"
         ><a v-if="timelessLinkShow" v-bind:href="timelessLink">{{
@@ -226,5 +255,11 @@ select {
 }
 .error {
   color: rgb(236, 76, 76);
+}
+.rollNumberForm {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 </style>
