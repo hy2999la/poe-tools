@@ -51,6 +51,14 @@ nav a:first-of-type {
     place-items: center;
     min-height: 100vh;
     border-right: 1px solid white;
+    width: 20vw;
+    top: 0;
+    position: fixed;
+    overflow: auto;
+  }
+
+  main {
+    margin-left: 25vw;
   }
 
   .logo {
