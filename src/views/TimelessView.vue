@@ -172,12 +172,12 @@ const deleteAllRolls = function () {
     <RollNumberInput
       v-model:rollNumber="formData.rollNumber"
       v-model:allRolls="formData.allRolls"
-      @deleteRoll="deleteRoll"
-      @deleteAllRolls="deleteAllRolls"
+      @delete-roll="deleteRoll"
+      @delete-all-rolls="deleteAllRolls"
     />
     <button @click="generateLink">Generate Link</button>
     <span id="tradeLink"
-      ><a v-if="state.timelessLinkShow" v-bind:href="state.timelessLink">{{
+      ><a v-if="state.timelessLinkShow" :href="state.timelessLink">{{
         state.timelessLinkText
       }}</a>
       <p v-else :class="state.timelessLinkClass">

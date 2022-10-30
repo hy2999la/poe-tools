@@ -50,52 +50,59 @@ const updateValue = function (e: KeyboardEvent) {
 
 <template>
   <main>
-    <label class="rollNumberList" for="rollNumberInput">
-      <span v-if="allRolls"></span>
-      <InputGridItem
-        v-else
-        v-for="item in modelValue"
-        :key="item"
-        :roll="item"
-        @click="$emit('deleteRoll', item)"
-      >
-        {{ item }}
-      </InputGridItem>
-      <input
-        class="rollNumberInput"
-        id="rollNumberInput"
-        :value="inputValue"
-        :placeholder="allRolls ? 'Searching for all rolls' : 'Roll number...'"
-        :disabled="allRolls"
-        @keyup="updateValue"
-      />
-    </label>
-    <label class="minMaxText" for="rollNumber"
-      >{{ selectedJewelDict.min }} - {{ selectedJewelDict.max }}</label
-    >
+    <div class="rollNumberWrapper">
+      <div class="minMaxText">
+        {{ selectedJewelDict.min }} - {{ selectedJewelDict.max }}
+      </div>
+      <hr />
+      <div v-if="allRolls" class="allRolls">Searching for all rolls.</div>
+      <label v-else class="rollNumberList" for="rollNumberInput">
+        <InputGridItem
+          v-for="item in modelValue"
+          :key="item"
+          :roll="item"
+          @click="$emit('deleteRoll', item)"
+        >
+          {{ item }}
+        </InputGridItem>
+        <div style="display: block">
+          <input
+            id="rollNumberInput"
+            class="rollNumberInput"
+            :value="inputValue"
+            placeholder="Roll number..."
+            :disabled="allRolls"
+            @keyup="updateValue"
+          />
+        </div>
+      </label>
+    </div>
     <button @click="$emit('deleteAllRolls')">Clear</button>
   </main>
 </template>
 
 <style scoped>
-.rollNumberList {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: left;
+.rollNumberWrapper {
   width: 40vw;
   max-width: 40vw;
-  padding: 1em;
+  min-height: 6em;
   border: 1px solid white;
+  border-radius: 15px;
+}
+.rollNumberList {
+  min-height: 6em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 1em;
   gap: 0.5vw;
   cursor: text;
-  border-radius: 15px;
 }
 input {
   background: none;
   border: none;
   color: rgba(235, 235, 235, 0.64);
-  float: left;
 }
 input:focus {
   outline: none;

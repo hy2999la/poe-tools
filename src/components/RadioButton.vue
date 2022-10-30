@@ -20,9 +20,9 @@ const radioClick = function (e: Event) {
       :id="id"
       :name="name"
       :value="id"
-      @input="radioClick"
       type="radio"
       :checked="checked"
+      @input="radioClick"
     />
     <label :for="id">
       <slot id="icon" class="icon"></slot>

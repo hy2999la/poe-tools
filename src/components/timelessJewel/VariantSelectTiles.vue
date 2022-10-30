@@ -22,7 +22,7 @@ const selectValue = function (e: string) {
       name="variantRadio"
       :label="option.label"
       :checked="i == 0"
-      @radioSelect="selectValue"
+      @radio-select="selectValue"
     />
   </main>
 </template>

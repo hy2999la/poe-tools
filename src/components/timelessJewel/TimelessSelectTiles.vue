@@ -19,43 +19,43 @@ const selectValue = function (e: string) {
 <template>
   <main class="tiles">
     <RadioButton
-      name="timelessRadio"
       id="brutalRestraint"
+      name="timelessRadio"
       label="Brutal Restraint"
       checked
-      @radioSelect="selectValue"
+      @radio-select="selectValue"
     >
       <IconBrutalRestraint />
     </RadioButton>
     <RadioButton
-      name="timelessRadio"
       id="elegantHubris"
+      name="timelessRadio"
       label="Elegant Hubris"
-      @radioSelect="selectValue"
+      @radio-select="selectValue"
     >
       <IconElegantHubris />
     </RadioButton>
     <RadioButton
-      name="timelessRadio"
       id="gloriousVanity"
+      name="timelessRadio"
       label="Glorious Vanity"
-      @radioSelect="selectValue"
+      @radio-select="selectValue"
     >
       <IconGloriousVanity />
     </RadioButton>
     <RadioButton
-      name="timelessRadio"
       id="lethalPride"
+      name="timelessRadio"
       label="Lethal Pride"
-      @radioSelect="selectValue"
+      @radio-select="selectValue"
     >
       <IconLethalPride />
     </RadioButton>
     <RadioButton
-      name="timelessRadio"
       id="militantFaith"
+      name="timelessRadio"
       label="Militant Faith"
-      @radioSelect="selectValue"
+      @radio-select="selectValue"
     >
       <IconMilitantFaith />
     </RadioButton>

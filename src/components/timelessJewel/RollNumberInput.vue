@@ -19,17 +19,17 @@ defineEmits([
 <template>
   <main class="rollNumberForm">
     <InputGrid
-      :allRolls="allRolls"
-      :modelValue="rollNumber"
-      @update:modelValue="$emit('update:rollNumber', $event)"
-      @deleteRoll="$emit('deleteRoll', $event)"
-      @deleteAllRolls="$emit('deleteAllRolls')"
+      :all-rolls="allRolls"
+      :model-value="rollNumber"
+      @update:model-value="$emit('update:rollNumber', $event)"
+      @delete-roll="$emit('deleteRoll', $event)"
+      @delete-all-rolls="$emit('deleteAllRolls')"
     />
     <div class="rollNumberInput">
       <input
+        id="allRolls"
         type="checkbox"
         name="allRolls"
-        id="allRolls"
         @input="
           $emit('update:allRolls', ($event.target as HTMLInputElement).checked)
         "
