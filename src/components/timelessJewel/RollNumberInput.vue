@@ -1,42 +1,39 @@
 <script setup lang="ts">
-import InputGrid from '../InputGrid.vue';
+import { useTimelessJewelStore } from '@/store/timelessJewel';
 
-interface InputListProps {
-  rollNumber: number[];
-  allRolls: boolean;
-}
+import InputGrid from '../shared/InputGrid.vue';
 
-defineProps<InputListProps>();
+defineEmits(['deleteRoll', 'deleteAllRolls']);
 
-defineEmits([
-  'update:allRolls',
-  'update:rollNumber',
-  'deleteRoll',
-  'deleteAllRolls',
-]);
+const timelessStore = useTimelessJewelStore();
+
+const validateRoll = function (num: string): boolean {
+  const reg = /^\s*\d*\s*$/;
+  if (!reg.test(num)) {
+    return false;
+  }
+  const numParsed = Number(num.trim());
+  return (
+    numParsed >= timelessStore.state.minMax[0] &&
+    numParsed <= timelessStore.state.minMax[1]
+  );
+};
 </script>
 
 <template>
-  <main class="rollNumberForm">
-    <InputGrid
-      :all-rolls="allRolls"
-      :model-value="rollNumber"
-      @update:model-value="$emit('update:rollNumber', $event)"
-      @delete-roll="$emit('deleteRoll', $event)"
-      @delete-all-rolls="$emit('deleteAllRolls')"
-    />
-    <div class="rollNumberInput">
-      <input
-        id="allRolls"
-        type="checkbox"
-        name="allRolls"
-        @input="
-          $emit('update:allRolls', ($event.target as HTMLInputElement).checked)
-        "
-      />
-      <label class="allRollsLabel" for="allRolls">All Rolls</label>
-    </div>
-  </main>
+  <InputGrid
+    v-model="timelessStore.formData.rollNumber"
+    :disabled="timelessStore.formData.allRolls"
+    :validator="validateRoll"
+    :placeholder="
+      timelessStore.formData.allRolls ? 'Rolls searching off' : 'Roll number...'
+    "
+    @delete-all-rolls="timelessStore.deleteAllRolls()"
+    @delete-roll="timelessStore.deleteRoll($event)"
+  >
+    Roll Range: {{ timelessStore.state.minMax[0] }} -
+    {{ timelessStore.state.minMax[1] }}
+  </InputGrid>
 </template>
 
 <style scoped>
@@ -45,11 +42,7 @@ defineEmits([
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-.rollNumberInput {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  gap: 1em;
 }
 .allRollsLabel {
   margin-left: 5px;

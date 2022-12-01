@@ -1,5 +1,5 @@
 interface TimelessJewelDictItem {
-  name: string;
+  label: string;
   variants: string[];
   min: number;
   max: number;

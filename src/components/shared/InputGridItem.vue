@@ -1,12 +1,11 @@
 <script lang="ts">
-// use normal <script> to declare options
 export default {
   inheritAttrs: false,
 };
 </script>
 
 <script setup lang="ts">
-import IconDelete from './icons/IconDelete.vue';
+import IconDelete from '../icons/IconDelete.vue';
 </script>
 
 <template>

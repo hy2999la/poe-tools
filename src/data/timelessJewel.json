@@ -1,32 +1,32 @@
 {
   "brutalRestraint": {
+    "label": "Brutal Restraint",
     "max": 8000,
     "min": 500,
-    "name": "Brutal Restraint",
     "variants": ["Asenath", "Balbala", "Nasima"]
   },
   "elegantHubris": {
+    "label": "Elegant Hubris",
     "max": 160000,
     "min": 2000,
-    "name": "Elegant Hubris",
     "variants": ["Cadiro", "Caspiro", "Victario"]
   },
   "gloriousVanity": {
+    "label": "Glorious Vanity",
     "max": 8000,
     "min": 100,
-    "name": "Glorious Vanity",
     "variants": ["Ahuana", "Doryani", "Xibaqua"]
   },
   "lethalPride": {
+    "label": "Lethal Pride",
     "max": 18000,
     "min": 10000,
-    "name": "Lethal Pride",
     "variants": ["Akoya", "Kaom", "Rakiata"]
   },
   "militantFaith": {
+    "label": "Militant Faith",
     "max": 10000,
     "min": 2000,
-    "name": "Militant Faith",
     "variants": ["Avarius", "Dominus", "Maxarius"]
   }
 }

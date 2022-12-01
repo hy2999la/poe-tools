@@ -1,14 +1,19 @@
-<script setup lang="ts">
-import { inject, ref } from 'vue';
-import InputGridItem from './InputGridItem.vue';
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+};
+</script>
 
-import type { TimelessJewelDictItem } from '@/types/TimelessJewelDict';
+<script setup lang="ts">
+import { ref } from 'vue';
+
+import InputGridItem from './InputGridItem.vue';
 
 const inputValue = ref('');
 
 const props = defineProps<{
-  allRolls: boolean;
   modelValue: number[];
+  validator: Function;
 }>();
 
 const emits = defineEmits([
@@ -17,26 +22,13 @@ const emits = defineEmits([
   'deleteAllRolls',
 ]);
 
-const selectedJewelDict = inject('selectedJewelDict') as TimelessJewelDictItem;
-
-const validateRoll = function (num: string): boolean {
-  const reg = /^\s*\d*\s*$/;
-  if (!reg.test(num)) {
-    return false;
-  }
-  const numParsed = Number(num.trim());
-  return (
-    numParsed >= selectedJewelDict.min && numParsed <= selectedJewelDict.max
-  );
-};
-
 const updateValue = function (e: KeyboardEvent) {
   if (e.key === 'Enter') {
     const val = (e.target as HTMLInputElement).value;
     const newValue = [...props.modelValue];
     const badValues: string[] = [];
     val.split(',').forEach((v) => {
-      if (validateRoll(v) && newValue.indexOf(Number(v)) < 0) {
+      if (props.validator(v) && newValue.indexOf(Number(v)) < 0) {
         newValue.push(Number(v));
       } else {
         badValues.push(v);
@@ -49,14 +41,13 @@ const updateValue = function (e: KeyboardEvent) {
 </script>
 
 <template>
-  <main>
-    <div class="rollNumberWrapper">
-      <div class="minMaxText">
-        {{ selectedJewelDict.min }} - {{ selectedJewelDict.max }}
-      </div>
-      <hr />
-      <div v-if="allRolls" class="allRolls">Searching for all rolls.</div>
-      <label v-else class="rollNumberList" for="rollNumberInput">
+  <main class="inputGridWrapper">
+    <div class="inputGrid">
+      <label
+        class="inputGridList"
+        for="inputGridInput"
+        :disabled="$attrs.disabled"
+      >
         <InputGridItem
           v-for="item in modelValue"
           :key="item"
@@ -67,44 +58,64 @@ const updateValue = function (e: KeyboardEvent) {
         </InputGridItem>
         <div style="display: block">
           <input
-            id="rollNumberInput"
-            class="rollNumberInput"
+            id="inputGridInput"
+            class="inputGridInput"
+            :placeholder="($attrs.placeholder as string)"
+            :disabled="($attrs.disabled as boolean)"
             :value="inputValue"
-            placeholder="Roll number..."
-            :disabled="allRolls"
             @keyup="updateValue"
           />
         </div>
       </label>
     </div>
-    <button @click="$emit('deleteAllRolls')">Clear</button>
+    <div class="inputGridSubContent">
+      <span style="color: rgba(150, 150, 150, 0.64)">
+        <slot></slot>
+      </span>
+      <button @click="$emit('deleteAllRolls')">Clear All</button>
+    </div>
   </main>
 </template>
 
 <style scoped>
-.rollNumberWrapper {
-  width: 40vw;
-  max-width: 40vw;
-  min-height: 6em;
+.inputGridWrapper {
+  margin-inline: 2em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.inputGrid {
+  width: 100%;
   border: 1px solid white;
   border-radius: 15px;
+  overflow: hidden;
 }
-.rollNumberList {
-  min-height: 6em;
+.inputGridList {
+  min-height: 2em;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
+  place-items: flex-start;
   padding: 1em;
   gap: 0.5vw;
   cursor: text;
+}
+
+.inputGridSubContent {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em 1.5em;
 }
 input {
   background: none;
   border: none;
   color: rgba(235, 235, 235, 0.64);
 }
+
 input:focus {
   outline: none;
+}
+.inputGridList[disabled='true'] {
+  cursor: default;
+  background-color: #393939;
 }
 </style>
