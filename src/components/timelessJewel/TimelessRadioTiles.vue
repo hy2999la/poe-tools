@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useTimelessJewelStore } from '@/store/timelessJewel';
 
-import IconBrutalRestraint from '../icons/timeless/IconBrutalRestraint.vue';
-import IconElegantHubris from '../icons/timeless/IconElegantHubris.vue';
-import IconGloriousVanity from '../icons/timeless/IconGloriousVanity.vue';
-import IconLethalPride from '../icons/timeless/IconLethalPride.vue';
-import IconMilitantFaith from '../icons/timeless/IconMilitantFaith.vue';
+import IconBrutalRestraint from '../icons/timelessJewel/IconBrutalRestraint.vue';
+import IconElegantHubris from '../icons/timelessJewel/IconElegantHubris.vue';
+import IconGloriousVanity from '../icons/timelessJewel/IconGloriousVanity.vue';
+import IconLethalPride from '../icons/timelessJewel/IconLethalPride.vue';
+import IconMilitantFaith from '../icons/timelessJewel/IconMilitantFaith.vue';
 import RadioTiles from '../shared/RadioTiles.vue';
 
 const timelessStore = useTimelessJewelStore();
@@ -46,15 +46,3 @@ const jewels = [
     :options="jewels"
   />
 </template>
-
-<style>
-@media (min-width: 830px) {
-  .labelText {
-    white-space: nowrap;
-  }
-}
-svg {
-  width: 50%;
-  height: 50%;
-}
-</style>

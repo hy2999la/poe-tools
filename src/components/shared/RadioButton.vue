@@ -1,19 +1,18 @@
-<script lang="ts">
-interface RadioButtonProps {
-  name: string;
-  value: string;
-  label: string;
-  checked?: boolean;
-  type?: ButtonType;
-}
-</script>
-
 <script setup lang="ts">
 import type { ButtonType } from '@/types/Button';
 
-withDefaults(defineProps<RadioButtonProps>(), {
-  type: 'button',
-});
+withDefaults(
+  defineProps<{
+    name: string;
+    value: string;
+    label: string;
+    checked?: boolean;
+    type?: ButtonType;
+  }>(),
+  {
+    type: 'button',
+  }
+);
 
 const emit = defineEmits(['radioSelect']);
 
@@ -33,13 +32,13 @@ const radioClick = function (e: Event) {
     />
     <label :for="value">
       <slot id="icon" class="icon"></slot>
-      <span class="labelText">{{ label }}</span>
+      <span v-if="label.length > 0" class="labelText">{{ label }}</span>
     </label>
   </div>
 </template>
 
 <style scoped>
-@import '@/css/base-button.css';
+@import '@/css/button.css';
 .labelText {
   user-select: none;
 }

@@ -1,0 +1,101 @@
+{
+  "duelist": {
+    "ascendancies": {
+      "champion": {
+        "label": "Champion"
+      },
+      "gladiator": {
+        "label": "Gladiator"
+      },
+      "slayer": {
+        "label": "Slayer"
+      }
+    },
+    "hiddenForbiddenJewelPassive": "Fatal Flourish",
+    "label": "Duelist"
+  },
+  "marauder": {
+    "ascendancies": {
+      "berserker": {
+        "label": "Berserker"
+      },
+      "chieftain": {
+        "label": "Chieftain"
+      },
+      "juggernaut": {
+        "label": "Juggernaut"
+      }
+    },
+    "hiddenForbiddenJewelPassive": "Indomitable Resolve",
+    "label": "Marauder"
+  },
+  "ranger": {
+    "ascendancies": {
+      "deadeye": {
+        "label": "Deadeye"
+      },
+      "pathfinder": {
+        "label": "Pathfinder"
+      },
+      "raider": {
+        "label": "Raider"
+      }
+    },
+    "hiddenForbiddenJewelPassive": "Fury of Nature",
+    "label": "Ranger"
+  },
+  "scion": {
+    "ascendancies": {
+      "ascendant": {
+        "label": "Ascendant"
+      }
+    },
+    "hiddenForbiddenJewelPassive": "Unleashed Potential",
+    "label": "Scion"
+  },
+  "shadow": {
+    "ascendancies": {
+      "assassin": {
+        "label": "Assassin"
+      },
+      "saboteur": {
+        "label": "Saboteur"
+      },
+      "trickster": {
+        "label": "Trickster"
+      }
+    },
+    "hiddenForbiddenJewelPassive": "Harness the Void",
+    "label": "Shadow"
+  },
+  "templar": {
+    "ascendancies": {
+      "guardian": {
+        "label": "Guardian"
+      },
+      "hierophant": {
+        "label": "Hierophant"
+      },
+      "inquisitor": {
+        "label": "Inquisitor"
+      }
+    },
+    "hiddenForbiddenJewelPassive": "Searing Purity",
+    "label": "Templar"
+  },
+  "witch": {
+    "ascendancies": {
+      "elementalist": {
+        "label": "Elementalist"
+      },
+      "necromancer": {
+        "label": "Necromancer"
+      },
+      "occultist": {
+        "label": "Occultist"
+      }
+    },
+    "hiddenForbiddenJewelPassive": "Nine Lives",
+    "label": "Witch"
+  }
+}

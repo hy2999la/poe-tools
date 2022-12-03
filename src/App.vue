@@ -7,10 +7,11 @@ import { RouterLink, RouterView } from 'vue-router';
     <nav>
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/timeless">Timeless</RouterLink>
+      <RouterLink to="/forbiddenJewel">Forbidden Jewel</RouterLink>
     </nav>
   </header>
 
-  <RouterView />
+  <RouterView style="margin-inline: 10vw" />
 </template>
 
 <style scoped>
@@ -45,7 +46,12 @@ nav a:first-of-type {
   border: 0;
 }
 
-@media (min-width: 1024px) {
+main {
+  margin: auto;
+  overflow: initial;
+}
+
+/* @media (min-width: 1024px) {
   header {
     display: flex;
     place-items: center;
@@ -79,5 +85,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
+} */
 </style>

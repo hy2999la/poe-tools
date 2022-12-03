@@ -23,8 +23,12 @@ const generateLink = async function (): Promise<void> {
       <h3 class="form-header">Timeless Jewel</h3>
       <TimelessRadioTiles />
 
+      <hr class="divider" />
+
       <h3 class="form-header">Variants</h3>
       <VariantRadioTiles />
+
+      <hr class="divider" />
 
       <span style="grid-column: 2 / 3; margin-inline: 2em">
         If you would like to
@@ -37,12 +41,14 @@ const generateLink = async function (): Promise<void> {
         />
         &lt;- Click or leave the Roll number... field below blank
       </span>
+
       <h3 class="form-header">Rolls</h3>
       <RollNumberInput
         @delete-roll="timelessStore.deleteRoll"
         @delete-all-rolls="timelessStore.deleteAllRolls"
       />
     </div>
+    <hr />
     <button @click="generateLink">Generate Link</button>
     <span id="tradeLink"
       ><a v-if="true" :href="timelessStore.state.timelessLink">{{
@@ -58,7 +64,7 @@ const generateLink = async function (): Promise<void> {
   </main>
 </template>
 
-<style>
+<style scoped>
 /* @media (min-width: 1024px) {
   .timeless {
     min-height: 100vh;
@@ -76,6 +82,9 @@ const generateLink = async function (): Promise<void> {
   justify-content: center;
   row-gap: 2em;
   padding: 20px;
+}
+.divider {
+  grid-column: 1 / 3;
 }
 .error {
   color: rgb(236, 76, 76);

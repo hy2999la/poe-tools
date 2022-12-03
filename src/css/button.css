@@ -9,6 +9,15 @@
   z-index: 0;
 }
 
+.type_text input:checked ~ label {
+  color: rgb(95, 119, 89);
+  overflow: visible;
+}
+
+.type_text label:hover > .labelText {
+  text-decoration-line: underline;
+}
+
 .type_button > label {
   border: 1px solid transparent;
   border-radius: 3px;
@@ -23,25 +32,23 @@
   border-style: solid;
   border-color: rgb(255, 255, 255);
   box-shadow: 20px;
+  background-color: rgb(63, 78, 59);
 }
 
-.btnWrapper {
-  width: auto;
-  height: 100%;
-
-  min-height: 100%;
-
+.type_button.btnWrapper {
   max-width: 150px;
-  max-height: 100%;
+  width: 100%;
 }
 
 input {
-  display: block;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+
+  width: 0;
+  height: 0;
 
   opacity: 0;
   z-index: 1;
