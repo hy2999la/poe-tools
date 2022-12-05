@@ -40,6 +40,10 @@
   width: 100%;
 }
 
+.labelText {
+  user-select: none;
+}
+
 input {
   position: absolute;
   top: 0;

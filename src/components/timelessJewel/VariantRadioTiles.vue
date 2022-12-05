@@ -8,7 +8,7 @@ const timelessStore = useTimelessJewelStore();
 
 <template>
   <RadioTiles
-    v-model="timelessStore.formData.variantName"
+    v-model.lazy="timelessStore.formData.variantName"
     name="variantRadio"
     :options="timelessStore.state.currentVariants"
   />

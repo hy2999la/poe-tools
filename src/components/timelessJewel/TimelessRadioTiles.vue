@@ -41,7 +41,7 @@ const jewels = [
 
 <template>
   <RadioTiles
-    v-model="timelessStore.formData.jewelName"
+    v-model.lazy="timelessStore.formData.jewelName"
     name="timelessJewelRadio"
     :options="jewels"
   />

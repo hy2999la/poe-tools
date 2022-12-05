@@ -50,14 +50,6 @@ export const useTimelessJewelStore = defineStore('timelessJewel', () => {
     }
   });
 
-  const setJewelName = function (jewel: string) {
-    jewelName.value = jewel;
-  };
-
-  const setVariantName = function (variant: string) {
-    variantName.value = variant;
-  };
-
   const deleteRoll = function (roll: number) {
     const i = rollNumber.value.indexOf(roll);
     rollNumber.value.splice(i, 1);
@@ -155,8 +147,6 @@ export const useTimelessJewelStore = defineStore('timelessJewel', () => {
       variantName,
     },
     generateLink,
-    setJewelName,
-    setVariantName,
     state: {
       currentVariants,
       minMax,

@@ -8,7 +8,7 @@ const forbiddenJewelStore = useForbiddenJewelStore();
 
 <template>
   <RadioTiles
-    v-model="forbiddenJewelStore.formData.className"
+    v-model.lazy="forbiddenJewelStore.formData.className"
     name="classRadio"
     :options="forbiddenJewelStore.state.currentClasses"
   />

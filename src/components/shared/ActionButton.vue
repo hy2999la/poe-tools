@@ -1,31 +1,52 @@
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+};
+</script>
+
 <script setup lang="ts">
-defineProps<{
-  name: string;
-  label?: string;
-  type: string;
-  action?: Function;
-  href?: string;
-}>();
-defineEmits(['update:modelValue']);
+withDefaults(
+  defineProps<{
+    name: string;
+    label?: string;
+    type?: string;
+    href?: string;
+  }>(),
+  {
+    type: 'button',
+  }
+);
+defineEmits(['click']);
 </script>
 
 <template>
-  <div class="btnWrapper type_button">
-    <input :id="name" :name="name" type="url" href="www.google.com" />
+  <a
+    v-if="href && href.length > 0"
+    :id="name"
+    :class="['btnWrapper', `type_${type}`]"
+    :href="href"
+    :name="name"
+  >
     <label :for="name">
       <slot id="icon" class="icon"></slot>
-      <span v-if="label && label.length > 0" class="labelText">{{
-        label
-      }}</span>
+      <div v-if="label && label.length > 0" class="labelText">
+        {{ label }}
+      </div>
+    </label>
+  </a>
+  <div v-else :class="['btnWrapper', `type_${type}`]">
+    <input :id="name" :name="name" type="url" @click="$emit('click')" />
+    <label :for="name">
+      <slot id="icon" class="icon"></slot>
+      <div v-if="label && label.length > 0" class="labelText">
+        {{ label }}
+      </div>
     </label>
   </div>
 </template>
 
 <style scoped>
 @import '@/css/button.css';
-.labelText {
-  user-select: none;
-}
 
 .type_button input:hover ~ label {
   background-color: rgb(95, 119, 89);

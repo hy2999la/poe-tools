@@ -8,7 +8,7 @@ const forbiddenJewelStore = useForbiddenJewelStore();
 
 <template>
   <RadioTiles
-    v-model="forbiddenJewelStore.formData.passive"
+    v-model.lazy="forbiddenJewelStore.formData.passive"
     name="passiveRadio"
     :options="forbiddenJewelStore.state.currentPassives"
   />
