@@ -3,20 +3,22 @@ import { computed, ref, watch } from 'vue';
 
 import ascendanciesJson from '@/data/ascendancies.json';
 import ascendancyPassivesJson from '@/data/ascendencyPassives.json';
+import forbiddenJewelHashJson from '@/data/forbiddenJewelHash.json';
 
 import type { AscendanciesDict } from '@/types/AscendanciesDict';
 import type { AscendancyPassivesDict } from '@/types/AscendanciesPassiveDict';
+import type { ForbiddenJewelHashDict } from '@/types/ForbiddenJewelHashDict';
 import type { RadioTileOptions } from '@/types/RadioTilesOptions';
 
 const ascendanciesDict: AscendanciesDict = ascendanciesJson;
 const ascendancyPassivesDict: AscendancyPassivesDict = ascendancyPassivesJson;
+const forbiddenJewelHashDict: ForbiddenJewelHashDict = forbiddenJewelHashJson;
 
 export const useForbiddenJewelStore = defineStore('forbiddenJewel', () => {
   const linkPrefix = 'https://www.pathofexile.com/trade/search/Kalandra/';
 
-  ("trade: { ids: { explicit: ['explicit.stat_2460506030'] }, option: true }");
-
-  const modifierPrefix = 'explicit.pseudo_timeless_jewel_';
+  const forbiddenFleshModifier = 'explicit.stat_2460506030';
+  const forbiddenFlameModifier = 'explicit.stat_1190333629';
 
   const currentClasses = computed<Array<RadioTileOptions>>(() =>
     Object.entries(ascendanciesDict).map((c) => ({
@@ -36,23 +38,14 @@ export const useForbiddenJewelStore = defineStore('forbiddenJewel', () => {
 
   const ascendancy = ref<string>(currentAscendancies.value[0].id);
 
-  const currentPassives = computed<Array<string>>(
-    () => ascendancyPassivesDict[ascendancy.value]
-  );
+  const currentPassives = computed<Array<string>>(() => [
+    ...ascendancyPassivesDict[ascendancy.value],
+    ascendanciesDict[className.value].hiddenForbiddenJewelPassive,
+  ]);
 
   const passive = ref<string>(ascendancyPassivesDict[ascendancy.value][0]);
 
-  const timelessLinkText = computed<string>(() => {
-    return '';
-  });
-
-  // const setJewelName = function (jewel: string) {
-  //   jewelName.value = jewel;
-  // };
-
-  // const setVariantName = function (variant: string) {
-  //   variantName.value = variant;
-  // };
+  const forbiddenJewelLink = ref<string[]>(['', '']);
 
   watch(currentAscendancies, (newAscendancies) => {
     ascendancy.value = newAscendancies[0].id;
@@ -62,18 +55,68 @@ export const useForbiddenJewelStore = defineStore('forbiddenJewel', () => {
     passive.value = newPassives[0];
   });
 
+  const buildLink = async function () {
+    const queryTemplateFlame = {
+      query: {
+        stats: [
+          {
+            filters: [
+              {
+                disabled: false,
+                id: forbiddenFlameModifier,
+                value: { option: forbiddenJewelHashDict[passive.value] },
+              },
+            ],
+            type: 'and',
+          },
+        ],
+        status: { option: 'online' },
+      },
+      sort: { price: 'asc' },
+    };
+
+    const queryTemplateFlesh = {
+      query: {
+        stats: [
+          {
+            filters: [
+              {
+                disabled: false,
+                id: forbiddenFleshModifier,
+                value: { option: forbiddenJewelHashDict[passive.value] },
+              },
+            ],
+            type: 'and',
+          },
+        ],
+        status: { option: 'online' },
+      },
+      sort: { price: 'asc' },
+    };
+
+    return [
+      `${linkPrefix}?q=${JSON.stringify(queryTemplateFlame)}`,
+      `${linkPrefix}?q=${JSON.stringify(queryTemplateFlesh)}`,
+    ];
+  };
+
+  const generateLink = async function () {
+    console.log('generating...');
+    forbiddenJewelLink.value = await buildLink();
+  };
+
   return {
     formData: {
       ascendancy,
       className,
       passive,
     },
-    // setJewelName,
-    // setVariantName,
+    generateLink,
     state: {
       currentAscendancies,
       currentClasses,
       currentPassives,
+      forbiddenJewelLink,
     },
   };
 });

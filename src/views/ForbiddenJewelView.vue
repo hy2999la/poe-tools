@@ -9,7 +9,9 @@ import { useForbiddenJewelStore } from '@/store/forbiddenJewel';
 
 const forbiddenJewelStore = useForbiddenJewelStore();
 
-const generateLink = function () {};
+const generateLink = async function (): Promise<void> {
+  await forbiddenJewelStore.generateLink();
+};
 </script>
 
 <template>
@@ -29,23 +31,33 @@ const generateLink = function () {};
       <h3 class="form-header">Passive</h3>
       <PassiveRadioTiles />
     </div>
+
     <hr style="margin-bottom: 2em" />
-    <span class="forbiddenJewelLinkButtons">
-      <ActionButton name="forbiddenFlameLink">
+
+    <button @click="generateLink">Generate Link</button>
+
+    <div class="forbiddenJewelLinkButtons">
+      <ActionButton
+        name="forbiddenFlameLink"
+        :href="forbiddenJewelStore.state.forbiddenJewelLink[0]"
+      >
         <IconForbiddenFlameJewel />
       </ActionButton>
-      <ActionButton name="forbiddenFleshLink">
+      <ActionButton
+        name="forbiddenFleshLink"
+        :href="forbiddenJewelStore.state.forbiddenJewelLink[1]"
+      >
         <IconForbiddenFleshJewel />
       </ActionButton>
-    </span>
-    <!-- <span id="tradeLink"
-      ><a v-if="true" :href="timelessStore.state.timelessLink">{{
-        timelessStore.state.timelessLinkText
-      }}</a>
+    </div>
+    <!-- <div id="tradeLink">
+      <a v-if="true" :href="timelessStore.state.timelessLink">
+        {{ timelessStore.state.timelessLinkText }}
+      </a>
       <p v-else :class="timelessStore.state.timelessLinkClass">
         {{ timelessStore.state.timelessLinkText }}
       </p>
-    </span> -->
+    </div> -->
     <div>
       <!-- <TimelessLinksList /> -->
     </div>
@@ -58,26 +70,32 @@ const generateLink = function () {};
   flex-direction: column;
   flex: 2;
 }
+
 .timeless {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto 50vw;
   align-items: center;
   justify-content: center;
   row-gap: 2em;
   padding: 20px;
 }
+
 .divider {
   grid-column: 1 / 3;
 }
+
 .error {
   color: rgb(236, 76, 76);
 }
+
 hr {
   width: 100%;
 }
+
 .form-header {
   text-align: end;
 }
+
 .forbiddenJewelLinkButtons {
   display: flex;
   flex-direction: row;
