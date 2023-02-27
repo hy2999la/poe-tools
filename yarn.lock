@@ -587,10 +587,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.11.56":
-  version: 16.18.3
-  resolution: "@types/node@npm:16.18.3"
-  checksum: 6b8ba2ea5d842f7986e366cb9184c54d273d492784dc62e08fd5afeae938d9b61aec6e4222d2541cd18f9b1412ba361bbcb3f4204fb003608af80a2a6af959f9
+"@types/node@npm:^18.14.2":
+  version: 18.14.2
+  resolution: "@types/node@npm:18.14.2"
+  checksum: 53c07e721f6ae33de71306f6a0b75dae6066a4f55bd5484c93bd59ff25f0c5f004ceafeef509a4d0cb9e24a247efc34d50489bcc1b05a53ecc68e2fc088e65cb
   languageName: node
   linkType: hard
 
@@ -3900,7 +3900,7 @@ __metadata:
   dependencies:
     "@fastify/cors": ^8.1.0
     "@rushstack/eslint-patch": ^1.1.4
-    "@types/node": ^16.11.56
+    "@types/node": ^18.14.2
     "@typescript-eslint/parser": ^5.44.0
     "@vitejs/plugin-vue": ^3.0.3
     "@vitejs/plugin-vue-jsx": ^2.0.1
