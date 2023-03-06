@@ -881,6 +881,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vue/devtools-api@npm:^6.5.0":
+  version: 6.5.0
+  resolution: "@vue/devtools-api@npm:6.5.0"
+  checksum: ec819ef3a426e91d09e9cfefd2827e9ed8ec9d62bb3b3e0674f3da8c7e92a4b879c3b777dc7329172ca6fe2670b62dd5580d23160339208f0f5ae038f2e504ad
+  languageName: node
+  linkType: hard
+
 "@vue/eslint-config-prettier@npm:^7.0.0":
   version: 7.0.0
   resolution: "@vue/eslint-config-prettier@npm:7.0.0"
@@ -3837,11 +3844,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pinia@npm:^2.0.23":
-  version: 2.0.26
-  resolution: "pinia@npm:2.0.26"
+"pinia@npm:^2.0.33":
+  version: 2.0.33
+  resolution: "pinia@npm:2.0.33"
   dependencies:
-    "@vue/devtools-api": ^6.4.5
+    "@vue/devtools-api": ^6.5.0
     vue-demi: "*"
   peerDependencies:
     "@vue/composition-api": ^1.4.0
@@ -3852,7 +3859,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 0d38cc0efc6572436c439491491df0e989182bad342fc3828d8865a42db6c6580c8f86663fcc47955bfeca5baf6e7f95e61b9b3f795ba161c19ef86fdc9b2841
+  checksum: efd9cf1d61521ab2a4549f93ada6e2c1b9feeb6c8f2f482281a53c0079e0008f02adaebb07a782865ccfe896876ac60447ef4586fc6eeaeaf17d634767e22638
   languageName: node
   linkType: hard
 
@@ -3918,7 +3925,7 @@ __metadata:
     fastify: ^4.6.0
     node-fetch: ^3.2.10
     npm-run-all: ^4.1.5
-    pinia: ^2.0.23
+    pinia: ^2.0.33
     prettier: ^2.7.1
     typescript: ~4.7.4
     vite: ^3.0.9
